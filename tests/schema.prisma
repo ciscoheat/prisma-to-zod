@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Continent {
+  id        String    @id
+  name      String    @unique
+  slug      String    @unique
+  countries Country[]
+}
+
+// https://flagpedia.net/
+model Country {
+  id          String     @id
+  name        String     @unique
+  slug        String     @unique
+  brands      Brand[]
+  continentId String?
+  continent   Continent? @relation(fields: [continentId], references: [id])
+}
+
+model Brand {
+  id        Int     @id @default(autoincrement())
+  name      String  @unique
+  slug      String  @unique
+  founded   Int?    @db.SmallInt
+  alias     String?
+  models    Model[]
+  countryId String
+  country   Country @relation(fields: [countryId], references: [id])
+}
+
+model Model {
+  id      Int    @id @default(autoincrement())
+  slug    String
+  name    String
+  brandId Int
+  brand   Brand  @relation(fields: [brandId], references: [id])
+  users   User[]
+
+  @@unique([name, brandId])
+  @@unique([slug, brandId])
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String?  @unique
+  name      String?
+  address   String?
+  createdAt DateTime @default(now())
+  models    Model[]
+}
