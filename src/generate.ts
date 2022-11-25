@@ -3,7 +3,11 @@ import type {
   ModelDeclaration,
   FieldDeclaration,
 } from "@loancrate/prisma-schema-parser";
-import { template } from "./template";
+import { template } from "./template.js";
+
+/////////////////////////////////////////////////////////////////////
+
+const identifier = "z";
 
 const baseTypes = new Map([
   ["Boolean", "boolean()"],
@@ -18,11 +22,11 @@ const nameModifiers = new Map([
   ["slug", "regex(/^[a-z0-9][a-z0-9-.]+$/)"],
 ]);
 
-const identifier = "z";
-
-const consts = [["intId", "z.number().positive()"]] as [string, string][];
+const consts = { intId: `${identifier}.number().positive()` };
 
 /////////////////////////////////////////////////////////////////////
+
+const useConst = (name: keyof typeof consts) => name;
 
 const fieldToZod = (member: FieldDeclaration) => {
   const optional = member.type.kind == "optional";
@@ -41,7 +45,6 @@ const fieldToZod = (member: FieldDeclaration) => {
   }
 
   if (!baseTypes.has(type)) {
-    //console.log('Skipping field: ' + member.name.value);
     return null;
   }
 
@@ -51,7 +54,8 @@ const fieldToZod = (member: FieldDeclaration) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     output.push(nameModifiers.get(name)!);
   } else if (type == "Int" && (name == "id" || name.endsWith("Id"))) {
-    output = ["intId"];
+    // Simplify if primary key is int
+    output = [useConst("intId")];
   }
 
   if (optional) output.push("nullable()");
@@ -78,5 +82,5 @@ export const prismaToZod = (prismaSchema: string) => {
     (d) => d.kind === "model"
   ) as ModelDeclaration[];
 
-  return template(models.map(modelToZod), consts);
+  return template(identifier, models.map(modelToZod), consts);
 };

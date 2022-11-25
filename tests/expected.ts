@@ -58,9 +58,9 @@ function schema<Shape, Other extends ZodRawShape>(obj: ExactKeys<Shape, Other>) 
   return z.object(obj);
 }
 
-export const ContinentSchema = schema<Continent, typeof Continent>(Continent);
-export const CountrySchema = schema<Country, typeof Country>(Country);
-export const BrandSchema = schema<Brand, typeof Brand>(Brand);
-export const ModelSchema = schema<Model, typeof Model>(Model);
-export const UserSchema = schema<User, typeof User>(User);
+export const continentSchema = schema<Continent, typeof Continent>(Continent);
+export const countrySchema = schema<Country, typeof Country>(Country);
+export const brandSchema = schema<Brand, typeof Brand>(Brand);
+export const modelSchema = schema<Model, typeof Model>(Model);
+export const userSchema = schema<User, typeof User>(User);
 // </P2Z>

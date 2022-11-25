@@ -1,21 +1,35 @@
 {
   "name": "prisma-to-zod",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "author": "Andreas Söderlund <ciscoheat@gmail.com> (https://blog.encodeart.dev)",
+  "repository": {
+    "url": "https://github.com/ciscoheat/simplest-sitegen"
+  },
+  "description": "Generate Zod validation schema from a Prisma schema.",
   "type": "module",
   "scripts": {
     "dev": "tsx watch tests/tests.ts",
     "test": "tsx tests/tests.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "bin": {
+    "p2z": "dist/cli.js",
+    "prisma-to-zod": "dist/cli.js"
+  },
+  "keywords": [
+    "prisma",
+    "zod",
+    "validation",
+    "schema",
+    "generator"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "@loancrate/prisma-schema-parser": "^2.0.0",
-    "@tsconfig/node18-strictest": "^1.0.0",
     "@tsconfig/node18-strictest-esm": "^1.0.1",
+    "@types/minimist": "^1.2.2",
     "@types/node": "^18.11.9",
+    "ansi-colors": "^4.1.3",
+    "minimist": "^1.2.7",
     "tsx": "^3.12.1",
     "typescript": "^4.9.3",
     "uvu": "^0.5.6",
