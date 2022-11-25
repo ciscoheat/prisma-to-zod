@@ -6,7 +6,7 @@ The generated file exports schemas according to the name of the Prisma models, w
 
 ## Installation
 
-```
+```bash
 (p)npm install -D prisma-to-zod
 ```
 
@@ -28,8 +28,9 @@ If no output file is specified, the schema will be written to stdout.
 import { prismaToZod } from "prisma-to-zod";
 import fs from "fs";
 
-const schema = fs.readFileSync("schema.prisma", { encoding: "utf8" });
+const schema = fs.readFileSync("prisma/schema.prisma", { encoding: "utf8" });
+
 console.log(prismaToZod(schema));
 ```
 
-Suggestions, improvements, PRs, are welcome at the github repo.
+Suggestions, improvements, PRs, are welcome at the [github repo](https://github.com/ciscoheat/prisma-to-zod).

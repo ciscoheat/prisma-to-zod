@@ -12,9 +12,10 @@
     "dev": "tsx watch tests/tests.ts",
     "test": "tsx tests/tests.ts"
   },
+  "exports": "./dist/index.js",
   "bin": {
-    "p2z": "dist/cli.js",
-    "prisma-to-zod": "dist/cli.js"
+    "p2z": "./dist/cli.js",
+    "prisma-to-zod": "./dist/cli.js"
   },
   "keywords": [
     "prisma",
