@@ -8,6 +8,7 @@
   "description": "Generate Zod validation schema from a Prisma schema.",
   "type": "module",
   "scripts": {
+    "prepublishOnly": "tsc",
     "dev": "tsx watch tests/tests.ts",
     "test": "tsx tests/tests.ts"
   },
