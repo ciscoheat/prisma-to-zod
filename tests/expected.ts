@@ -8,38 +8,38 @@ import type { Continent, Country, Brand, Model, User } from '@prisma/client';
 
 // This code is safe to edit and modify
 
-const intId = z.number().positive();
+export const intId = z.number().positive();
 
-const Continent = {
+const continent = {
   id: z.string(),
   name: z.string(),
-  slug: z.string().regex(/^[a-z0-9][a-z0-9-.]+$/)
+  slug: z.string().regex(/^[a-z0-9][a-z0-9-]+$/)
 };
 
-const Country = {
+const country = {
   id: z.string(),
   name: z.string(),
-  slug: z.string().regex(/^[a-z0-9][a-z0-9-.]+$/),
+  slug: z.string().regex(/^[a-z0-9][a-z0-9-]+$/),
   continentId: z.string().nullable()
 };
 
-const Brand = {
+const brand = {
   id: intId,
   name: z.string(),
-  slug: z.string().regex(/^[a-z0-9][a-z0-9-.]+$/),
+  slug: z.string().regex(/^[a-z0-9][a-z0-9-]+$/),
   founded: z.number().nullable(),
   alias: z.string().nullable(),
   countryId: z.string()
 };
 
-const Model = {
+const model = {
   id: intId,
-  slug: z.string().regex(/^[a-z0-9][a-z0-9-.]+$/),
+  slug: z.string().regex(/^[a-z0-9][a-z0-9-]+$/),
   name: z.string(),
   brandId: intId
 };
 
-const User = {
+const user = {
   id: intId,
   email: z.string().email().nullable(),
   name: z.string().nullable(),
@@ -58,9 +58,9 @@ function schema<Shape, Other extends ZodRawShape>(obj: ExactKeys<Shape, Other>) 
   return z.object(obj);
 }
 
-export const continentSchema = schema<Continent, typeof Continent>(Continent);
-export const countrySchema = schema<Country, typeof Country>(Country);
-export const brandSchema = schema<Brand, typeof Brand>(Brand);
-export const modelSchema = schema<Model, typeof Model>(Model);
-export const userSchema = schema<User, typeof User>(User);
+export const continentSchema = schema<Continent, typeof continent>(continent);
+export const countrySchema = schema<Country, typeof country>(country);
+export const brandSchema = schema<Brand, typeof brand>(brand);
+export const modelSchema = schema<Model, typeof model>(model);
+export const userSchema = schema<User, typeof user>(user);
 // </P2Z>

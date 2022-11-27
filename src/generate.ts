@@ -19,14 +19,14 @@ const baseTypes = new Map([
 
 const nameModifiers = new Map([
   ["email", "email()"],
-  ["slug", "regex(/^[a-z0-9][a-z0-9-.]+$/)"],
+  ["slug", "regex(/^[a-z0-9][a-z0-9-]+$/)"],
 ]);
 
-const consts = { intId: `${identifier}.number().positive()` };
+const exportConsts = { intId: `${identifier}.number().positive()` };
 
 /////////////////////////////////////////////////////////////////////
 
-const useConst = (name: keyof typeof consts) => name;
+const useConst = (name: keyof typeof exportConsts) => name;
 
 const fieldToZod = (member: FieldDeclaration) => {
   const optional = member.type.kind == "optional";
@@ -82,5 +82,5 @@ export const prismaToZod = (prismaSchema: string) => {
     (d) => d.kind === "model"
   ) as ModelDeclaration[];
 
-  return template(identifier, models.map(modelToZod), consts);
+  return template(identifier, models.map(modelToZod), exportConsts);
 };
