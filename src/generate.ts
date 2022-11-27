@@ -26,23 +26,38 @@ const exportConsts = { intId: `${identifier}.number().positive()` };
 
 /////////////////////////////////////////////////////////////////////
 
-export const prismaToZod = (prismaSchema: string) => {
+export function prismaToZod(prismaSchema: string) {
   const ast = parsePrismaSchema(prismaSchema);
 
   const models = ast.declarations.filter(
     (d) => d.kind === "model"
   ) as ModelDeclaration[];
 
+  return template(identifier, models.map(modelToZod), exportConsts);
+
+  /////////////////////////////////////////////////////////
+
   function modelToZod(model: ModelDeclaration) {
+    return [
+      model.name.value,
+      Object.fromEntries(
+        model.members
+          .filter((m) => m.kind == "field")
+          .map((m) => fieldToZod(m as FieldDeclaration))
+          .filter((m) => m) as [string, string][]
+      ),
+    ] as [string, Record<string, string>];
+
+    /////////////////////////////////////////////
+
     function fieldToZod(member: FieldDeclaration) {
       const useConst = (name: keyof typeof exportConsts) => name;
 
-      const isOptional = member.type.kind == "optional";
       const name = member.name.value;
+      const isOptional = member.type.kind == "optional";
 
-      let output: string[] = [identifier];
+      // Set the type
       let type = "";
-
       if (member.type.kind == "typeId") {
         type = member.type.name.value;
       } else if (
@@ -56,30 +71,24 @@ export const prismaToZod = (prismaSchema: string) => {
         return null;
       }
 
-      output.push(baseTypes.get(type) as string);
+      let output: string[] = [identifier, baseTypes.get(type) as string];
 
-      if (nameModifiers.has(name)) {
-        output.push(nameModifiers.get(name)!);
-      } else if (type == "Int" && (name == "id" || name.endsWith("Id"))) {
-        // Simplify if primary key is int
+      // Simplify if primary key is int
+      if (type == "Int" && (name == "id" || name.endsWith("Id"))) {
         output = [useConst("intId")];
       }
 
-      if (isOptional) output.push("nullable()");
+      // Add modifiers
+      if (nameModifiers.has(name)) {
+        output.push(nameModifiers.get(name)!);
+      }
+
+      // Check for nullable
+      if (isOptional) {
+        output.push("nullable()");
+      }
 
       return [name, output.join(".")];
     }
-
-    return [
-      model.name.value,
-      Object.fromEntries(
-        model.members
-          .filter((m) => m.kind == "field")
-          .map((m) => fieldToZod(m as FieldDeclaration))
-          .filter((m) => m) as [string, string][]
-      ),
-    ] as [string, Record<string, string>];
   }
-
-  return template(identifier, models.map(modelToZod), exportConsts);
-};
+}
