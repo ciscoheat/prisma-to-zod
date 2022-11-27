@@ -9,7 +9,7 @@ export const template = (
 // <P2Z> This will be replaced by generated code
 import { ${identifier} } from 'zod';
 import type { ZodRawShape } from 'zod';
-import type { ${types.map((t) => t[0]).join(", ")} } from '@prisma/client';
+import type { ${types.map(([name]) => name).join(", ")} } from '@prisma/client';
 // </P2Z>
 
 // This code is safe to edit and modify
