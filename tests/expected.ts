@@ -52,10 +52,10 @@ type ExactKeys<Shape, T> = keyof Shape extends keyof T
   ? keyof T extends keyof Shape
     ? T
     : never
-  : never;
+  : Omit<Shape, keyof T>;
 
 function schema<Shape, Other extends ZodRawShape>(obj: ExactKeys<Shape, Other>) {
-  return z.object(obj);
+  return z.object(obj as ZodRawShape);
 }
 
 export const continentSchema = schema<Continent, typeof continent>(continent);
