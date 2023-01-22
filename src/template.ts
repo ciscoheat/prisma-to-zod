@@ -25,10 +25,10 @@ type ExactKeys<Shape, T> = keyof Shape extends keyof T
   ? keyof T extends keyof Shape
     ? T
     : never
-  : never;
+  : Omit<Shape, keyof T>;
 
 function schema<Shape, Other extends ZodRawShape>(obj: ExactKeys<Shape, Other>) {
-  return ${identifier}.object(obj);
+  return ${identifier}.object(obj as ZodRawShape);
 }
 
 ${types.map(([name]) => exportSchema(name)).join("\n")}
