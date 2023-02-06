@@ -3,7 +3,7 @@
   "version": "0.2.3",
   "author": "Andreas Söderlund <ciscoheat@gmail.com> (https://blog.encodeart.dev)",
   "repository": {
-    "url": "https://github.com/ciscoheat/simplest-sitegen"
+    "url": "https://github.com/ciscoheat/prisma-to-zod"
   },
   "description": "Generate Zod validation schema from a Prisma schema.",
   "type": "module",
@@ -29,9 +29,9 @@
     "@loancrate/prisma-schema-parser": "^2.0.0",
     "@tsconfig/node18-strictest-esm": "^1.0.1",
     "@types/minimist": "^1.2.2",
-    "@types/node": "^18.11.18",
-    "tsx": "^3.12.2",
-    "typescript": "^4.9.4",
+    "@types/node": "^18.11.19",
+    "tsx": "^3.12.3",
+    "typescript": "^4.9.5",
     "uvu": "^0.5.6",
     "zod": "^3.20.2"
   },

@@ -33,7 +33,7 @@ console.log(prismaToZod(schema));
 
 ## Goals
 
-- [ ] Parse and update generated schema file instead of overwriting
-- [ ] Make library into a real [Prisma generator](https://www.prisma.io/docs/concepts/components/prisma-schema/generators)
+- Parse and update generated schema file instead of overwriting
+- Make library into a real [Prisma generator](https://www.prisma.io/docs/concepts/components/prisma-schema/generators)
 
 Suggestions, improvements, PRs, are welcome at the [github repo](https://github.com/ciscoheat/prisma-to-zod).
