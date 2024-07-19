@@ -1,3 +1,7 @@
+# DEPRECATION NOTICE
+
+**This project was experimental, [zod-prisma-types](https://github.com/chrishoermann/zod-prisma-types#readme) does everything you need and more.**
+
 # prisma-to-zod
 
 Simple generator of [Zod](https://zod.dev/) validation schemas from [Prisma](https://www.prisma.io/) schemas.
